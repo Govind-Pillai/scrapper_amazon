@@ -4,7 +4,7 @@ import csv
 
 def scrape_products(url, filename):
   """Scrapes product details from Amazon and saves them to a CSV file."""
-  headers = {'User-Agent': 'Mozilla/5.0'}  # Mimic a browser to avoid blocking
+  headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', 'Accept-Language': 'en-US, en;q=0.5'}  # Mimic a browser to avoid blocking
   response = requests.get(url, headers=headers)
   soup = BeautifulSoup(response.content, 'lxml')
 
@@ -21,7 +21,7 @@ def scrape_products(url, filename):
       rating = rating_element.text.strip() if rating_element else 'No Rating'
 
       seller_element = product.find('a', class_='a-size-small a-color-secondary')
-      seller = seller_element.text.strip() if seller_element else 'Out of Stock'
+      seller = seller_element.text.strip() if seller_element else 'N.A.'
     except:
       # Handle potential errors during scraping
       continue
@@ -38,7 +38,7 @@ def scrape_products(url, filename):
   print(f"Scraped {len(products)} products and saved to {filename}")
 
 # Replace with the desired filename
-filename = 'amazon_products.csv'
+filename = 'C:/Users/Govind/Python_Study/Webapp/amazon_products.csv'
 url = 'https://www.amazon.in/s?rh=n%3A6612025031&fs=true&ref=lp_6612025031_sar'
 
 scrape_products(url, filename)
